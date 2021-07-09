@@ -1,0 +1,53 @@
+{
+    "name": "BankX Helper",
+    "version": "0.1",
+    "manifest_version": 2,
+    "description": "Chrome extension for assisting the developement",
+    "permissions": [
+        "storage"
+        , "contextMenus"
+        , "tabs"
+    ],
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": false
+    },
+    "content_scripts": [
+      {
+        //"matches": ["file:///*", "http://*/*", "https://*/*"],
+        "matches": [
+            "http://192.168.5.8/*", "https://192.168.5.8/*"
+            , "http://192.168.5.7/*", "https://192.168.5.7/*"
+            , "http://exalogv137/*", "https://exalogv137/*"
+            , "http://exalogv336/*", "https://exalogv336/*"
+            , "http://exalogv137.fr.exalog.net/*", "https://exalogv137.fr.exalog.net/*"
+            , "http://exalogv336.fr.exalog.net/*", "https://exalogv336.fr.exalog.net/*"
+        ]
+        , "js": [
+            "helper.js",
+            "content.js"
+        ]
+        , "css": ["content.css"]
+        , "run_at": "document_end"
+      }
+    ],
+    "options_page": "options.html",
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/icon16.png",
+            "32": "images/icon32.png",
+            "48": "images/icon48.png",
+            "128": "images/icon128.png"
+      }
+    },
+    "icons": {
+        "16": "images/icon16.png",
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
+}
