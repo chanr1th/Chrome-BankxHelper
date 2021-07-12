@@ -7,11 +7,14 @@ class Helper {
 		let popover = document.createElement('div');
 		popover.style.left = parseInt(10 + element.getBoundingClientRect().left)+'px';
 		popover.className = 'popover';
-		popover.innerHTML = `name : ${element.name}<br>onClick : ${element.getAttribute('onclick')}`;
+		let body = document.createElement('div');
+		body.className = 'popover-body';
+		body.innerHTML = `name : ${element.name}<br>onClick : ${element.getAttribute('onclick')}`;
 		let close = document.createElement('span');
 		close.className = 'popover-close';
 		close.innerHTML = '&times;';
 		close.addEventListener('click', () => popover.remove());
+		popover.appendChild(body);
 		popover.appendChild(close);
 		// element.parentNode.insertBefore(popover, element.nextSibling);
 		element.parentNode.appendChild(popover, element.nextSibling);
