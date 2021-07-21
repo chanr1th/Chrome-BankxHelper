@@ -25,6 +25,9 @@
             , "http://exalogv137.fr.exalog.net/*", "https://exalogv137.fr.exalog.net/*"
             , "http://exalogv336.fr.exalog.net/*", "https://exalogv336.fr.exalog.net/*"
         ]
+        , "exclude_matches": [
+            "http://192.168.5.8/www.exabanque.net/site_ct/index.php", "https://192.168.5.8/www.exabanque.net/site_ct/index.php"
+        ]
         , "js": [
             "helper.js",
             "content.js"

@@ -5,7 +5,11 @@ class Helper {
 	}
 	static showPopoverOn(element) {
 		let popover = document.createElement('div');
-		popover.style.left = parseInt(10 + element.getBoundingClientRect().left)+'px';
+		// let elementPosition = this.getDocumentOffsetPosition(element);
+		let elementRect = element.getBoundingClientRect();
+		popover.style.left = parseInt(elementRect.left)+'px';
+		// popover.style.left = parseInt(elementPosition.left)+'px';
+		// popover.style.top = parseInt(elementPosition.top + elementRect.height)+'px';
 		popover.className = 'popover';
 		let body = document.createElement('div');
 		body.className = 'popover-body';
@@ -18,166 +22,207 @@ class Helper {
 		popover.appendChild(close);
 		// element.parentNode.insertBefore(popover, element.nextSibling);
 		element.parentNode.appendChild(popover, element.nextSibling);
-		setTimeout(() => popover.remove(), 5000);//self destroy
+		// setTimeout(() => popover.remove(), 5000);//self destroy
 	}
 	static getOrigine() {
-		let pageorigine = document.getElementsByName("page_origine");
-		let formorigine = document.getElementsByName("form_origine");
-		let form_pageorigine = document.getElementsByName("form_page_origine");
+		let pageOrigine = document.querySelector("[name=page_origine]");
+		let formOrigine = document.querySelector("[name=form_origine]");
+		let formPageOrigine = document.querySelector("[name=form_page_origine]");
 		let result = [];
-		[formorigine, pageorigine, form_pageorigine].forEach((itm, idx) => {
-			if (itm.length) {
-				result = [itm[0].name, itm[0].value];
+		[formOrigine, pageOrigine, formPageOrigine].forEach((element, idx) => {
+			if (element) {
+				result = [element.name, element.value];
 			}
 		});
 		return result;
 	}
 	static isBankx() {
-		return !!(document.getElementsByName('form_global_id_controle')[0]);
+		return (window.location.pathname.indexOf('/www.exabanque.net/') !== -1);
+	}
+	static isExacom() {
+		return (window.location.pathname.indexOf('/exacom.exalog.net/') !== -1);
+	}
+	static getSize(size) {
+		return parseInt(size.replace(/[^\d\.\-]/g, ''));
+	}
+	static getUnit(size) {
+		return parseInt(size.replace(/[^a-z%]/g, ''));
 	}
 }
 
-class Docker {
-	static STATE_EXPEND = 1;
+class Draggable {
+	static STATE_EXPAND = 1;
 	static STATE_COLLAPSE = 2;
-	constructor() {
-		this.status = this.STATE_COLLAPSE;
-		this.docker = document.createElement("div");
-		this.id = 'docker';
-		this.ceTimeout = null;//collap and expend Timeout
-		this.header = document.createElement("div");
-		this.hAction = document.createElement("div");
-		this.content = document.createElement("div");
-		this.dock_lastTop = 100;
-	}
-	getElement() {
-		this.docker.id = this.id;
-		this.docker.style.fontSize = '1rem';
-		this.docker.style.top = (sessionStorage.getItem('dock_top') ?? 18) + 'px';
-		this.docker.addEventListener("click", (e) => e.stopPropagation());
-		this.docker.addEventListener("mouseenter", () => {
-			if (this.getSize(this.docker.style.left) < 0) {
-				this.dock_expend();
-			}
-		});
-		this.docker.addEventListener("mouseleave", (e) => {
-			if (this.getSize(this.docker.style.left) == 0) {
-				clearTimeout(this.ceTimeout);
-				this.ceTimeout = setTimeout(this.dock_collapse, 3000);
-			}
-		});
-		sessionStorage.setItem('dock_status', sessionStorage.getItem('dock_status') ?? this.STATE_COLLAPSE);
-		// Header
-		this.header.id = this.docker.id + "-header";
-		this.header.innerHTML = "Information";
-		// header.style.textAlign = (stickTo == "left" ? "left" : "right");
-		this.hAction.id = "_colexp";
-		this.hAction.innerHTML = (sessionStorage.getItem('dock_status') == this.STATE_COLLAPSE ? "&gg;" : "&ll;");
-		// hAction.style.float = (stickTo == "left" ? "right" : "left");
-		this.hAction.addEventListener("click", () => {
-			this.docker.style.transition = "left .2s ease-in-out";
-			if (sessionStorage.getItem('dock_status') == this.STATE_COLLAPSE) {
-				this.dock_expend();
+	el = null;
+	header = null;
+	body = null;
+	dragging = false;
+	toColExp = null;// Collapse & expand Timeout
+	pin = false;
+	status = Draggable.STATE_COLLAPSE;
+	constructor(id) {
+		this.id = id;
+		this.el = document.createElement('div');
+		this.header = document.createElement('header');
+		this.body = document.createElement('section');
+		this.el.id = id;
+		this.el.style.position = 'absolute';
+		this.el.style.top = this.lastTop + 'px';
+		this.el.className = 'draggable';
+		this.header.className = 'draggable-header';
+		this.body.className = 'draggable-body';
+		// this.header.innerHTML = 'Header';
+		// this.body.innerHTML = this.lastTop;
+		//action
+		// this.status = Draggable.STATE_COLLAPSE;
+		this.btnColExp = document.createElement("span");
+		this.btnColExp.className = 'header-button';
+		this.btnColExp.innerHTML = (this.status == Draggable.STATE_COLLAPSE ? "&gg;" : "&ll;");
+		this.btnColExp.addEventListener("click", e => {
+			if (this.status == Draggable.STATE_COLLAPSE) {
+				this.expand();
 			} else {
-				this.dock_collapse();
+				this.collapse();
 			}
 		});
-		this.header.appendChild(this.hAction);
-		// Content
-		this.content.id = this.docker.id + "-content";
-		// Attach
-		this.docker.appendChild(this.header);
-		this.docker.appendChild(this.content);
-		this.dock_lastTop = this.docker.getBoundingClientRect().top;
-		this.dragElement(this.docker);
-		document.addEventListener("click", this.dock_collapse);
+		this.btnPin = document.createElement("span");
+		this.btnPin.className = 'header-button';
+		this.btnPin.innerHTML = "Pin";
+		this.btnPin.addEventListener("click", e => {
+			this.pin = !this.pin;
+		});
+		this.header.appendChild(this.btnColExp);
+		this.header.appendChild(this.btnPin);
+
+	}
+
+	get lastTop() {
+		return Number(sessionStorage.getItem(`${this.id}_top`) ?? 18);
+	}
+	set lastTop(lastTop) {
+		sessionStorage.setItem(`${this.id}_top`, lastTop);
+	}
+
+	#onDragBegin(e) {
+		e = e || window.event;
+		e.preventDefault();
+		this.dragging = true;
+		this.el.style.removeProperty('transition');
+		this.pos3 = e.clientX;
+		this.pos4 = e.clientY;
+		document.addEventListener('mouseup', this);
+		document.addEventListener('mousemove', this);
+	}
+
+	#onDragging(e) {
+		e = e || window.event;
+		e.preventDefault();
+		this.pos1 = this.pos3 - e.clientX;
+		this.pos2 = this.pos4 - e.clientY;
+		this.pos3 = e.clientX;
+		this.pos4 = e.clientY;
+		this.el.style.top = (this.el.offsetTop - this.pos2) + "px";
+		this.el.style.left = (this.el.offsetLeft - this.pos1) + "px";
+	}
+
+	#onDragEnd(e) {
+		this.dragging = false;
+		this.lastTop = this.el.getBoundingClientRect().top;
+		clearTimeout(this.toColExp);
+		this.toColExp = setTimeout(() => {
+			let left = Helper.getSize(this.el.style.left);
+			if (left > 0) {
+				this.expand(true);
+				this.toColExp = setTimeout(this.collapse.bind(this), 3000);
+			} else if (left < 0) {
+				this.collapse(true);
+			} else {
+				this.el.style.removeProperty('transition');
+			}
+		}, 3000);
+	}
+
+	expand(force = false) {//console.log('expand', this.status, Draggable.STATE_COLLAPSE);
+		if (this.status == Draggable.STATE_COLLAPSE || force) {
+			this.el.style.transition = "left .2s ease-in-out";
+			this.el.style.left = 0;
+			this.btnColExp.innerHTML = "&ll;";
+			this.status = Draggable.STATE_EXPAND;
+		}
+	}
+	collapse(force = false) {//console.log('collapse', this.status, Draggable.STATE_COLLAPSE);
+		if (this.status == Draggable.STATE_EXPAND || force) {
+			this.el.style.transition = "left .2s ease-in-out";
+			this.el.style.left = `-${this.el.offsetWidth - this.btnColExp.offsetWidth}px`;
+			this.btnColExp.innerHTML = "&gg;";
+			this.status = Draggable.STATE_COLLAPSE;
+		}
+	}
+
+	setTitle(title) {
+		let span = document.createElement('span');
+		span.innerHTML = title;
+		this.header.appendChild(span);
+		return this;
+	}
+
+	handleEvent(event) {
+		switch(event.type) {
+			case "click":
+				event.stopPropagation();
+				break;
+			case "mousedown":
+				this.#onDragBegin(event);
+				break;
+			case 'mousemove':
+				if (this.dragging) {
+					this.#onDragging(event);
+					// this.body.innerHTML = this.lastTop;
+				}
+				break;
+			case 'mouseup':
+				this.#onDragEnd(event);
+				// this.body.innerHTML = this.lastTop;
+				break;
+			case 'mouseenter':
+				if (Helper.getSize(this.el.style.left) < 0) {
+					this.expand();
+				}
+				break;
+			case 'mouseleave':
+				if (Helper.getSize(this.el.style.left) == 0) {
+					clearTimeout(this.toColExp);
+					this.toColExp = setTimeout(this.collapse.bind(this), 3000);
+				}
+				break;
+		}
+	}
+
+	getElement() {
+		this.el.appendChild(this.header);
+		this.el.appendChild(this.body);
+		this.header.style.cursor = 'move';
+		this.header.addEventListener('mousedown', this);
+		this.el.addEventListener("mouseenter", this);
+		this.el.addEventListener("mouseleave", this);
+		this.el.addEventListener("click", this);
+		document.addEventListener("click", this.collapse.bind(this));
 		window.addEventListener('scroll', (e) => {
-			clearTimeout(this.ceTimeout);
-			this.ceTimeout = setTimeout(() => {
-				this.docker.style.transition = "top .5s ease-in-out";
-				let top = window.pageYOffset + this.dock_lastTop;
-				this.docker.style.top = ((top<window.pageYOffset||top>=(window.pageYOffset+window.innerHeight))?window.pageYOffset:top) + 'px';
+			clearTimeout(this.toColExp);
+			this.toColExp = setTimeout(() => {
+				this.el.style.transition = "top .5s ease-in-out";
+				let top = window.pageYOffset + this.lastTop;
+				this.el.style.top = ((top < window.pageYOffset || top >= (window.pageYOffset + window.innerHeight)) ? window.pageYOffset : top) + 'px';
 			}, 200);
 		});
-		setTimeout(() => { // avoid conflict with appendChild()
-			this.docker.style.left = (sessionStorage.getItem('dock_status') == this.STATE_COLLAPSE ? `-${this.docker.offsetWidth - this.hAction.offsetWidth}px` : 0);
-		}, 0);
-		return this.docker;
-	}
-	dock_expend(force = false) {
-		if (sessionStorage.getItem('dock_status') == this.STATE_COLLAPSE || force) {
-			this.docker.style.transition = "left .2s ease-in-out";
-			this.docker.style.left = 0;
-			this.hAction.innerHTML = "&ll;";
-			sessionStorage.setItem('dock_status', this.STATE_EXPEND);
-		}
-	}
-	dock_collapse(force = false) {
-		if (sessionStorage.getItem('dock_status') == this.STATE_EXPEND || force) {
-			this.docker.style.transition = "left .2s ease-in-out";
-			this.docker.style.left = `-${this.docker.offsetWidth - this.hAction.offsetWidth}px`;
-			this.hAction.innerHTML = "&gg;";
-			sessionStorage.setItem('dock_status', this.STATE_COLLAPSE);
-		}
-	}
-	getSize(size) {
-		return parseInt(size.replace(/[^\d\.\-]/g, ''));
-	}
-	// getUnit(size) {
-	// 	return parseInt(size.replace(/[^a-z%]/g, ''));
-	// }
-	dragElement(elmnt) {
-		var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-		let dragMouseDown = (e) => {
-			elmnt.style.removeProperty('transition');
-			e = e || window.event;
-			e.preventDefault();
-			// get the mouse cursor position at startup:
-			pos3 = e.clientX;
-			pos4 = e.clientY;
-			document.onmouseup = closeDragElement;
-			document.onmousemove = elementDrag;
-		}
-		let elementDrag = (e) => {
-			// clearTimeout(window.toColEx);
-			e = e || window.event;
-			e.preventDefault();
-			// calculate the new cursor position:
-			pos1 = pos3 - e.clientX;
-			pos2 = pos4 - e.clientY;
-			pos3 = e.clientX;
-			pos4 = e.clientY;
-			elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-			elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-		}
-		let closeDragElement = () => {
-			/* stop moving when mouse button is released:*/
-			document.onmouseup = null;
-			document.onmousemove = null;
-			this.dock_lastTop = this.docker.getBoundingClientRect().top;
-			sessionStorage.setItem('dock_top', this.dock_lastTop);
-			clearTimeout(this.ceTimeout);
-			this.ceTimeout = setTimeout(function() {
-				let left = getSize(elmnt.style.left);
-				if (left > 0) {
-					this.dock_expend(true);
-					this.ceTimeout = setTimeout(this.dock_collapse, 3000);
-				} else if (left < 0) {
-					this.dock_collapse(true);
-				} else {
-					elmnt.style.removeProperty('transition');
-				}
-			}, 3000);
-		}
-		if (document.getElementById(elmnt.id + "-header")) {
-			/* if present, the header is where you move the DIV from:*/
-			document.getElementById(elmnt.id + "-header").onmousedown = dragMouseDown;
-		} else {
-			/* otherwise, move the DIV from anywhere inside the DIV:*/
-			elmnt.onmousedown = dragMouseDown;
-		}
+		return this.el;
 	}
 }
+// let dock1 = new Draggable('dock1');
+// document.body.appendChild(dock1.getElement());
+// let dock2 = new Draggable('dock2');
+// document.body.appendChild(dock2.getElement());
+
 // let JiraHelper = new helper.Jira();
 // let time = JiraHelper.parseHumanReadableTime(32460);
 // console.log('parsed Time', time);
