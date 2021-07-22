@@ -1,6 +1,6 @@
 'use strict';
 (() => {
-	// if (Helper.isBankx() || Helper.isExacom()) {
+	if (!Helper.isSiteRoot()) {
 		///////TEST////////
 		
 		///////////////////
@@ -94,7 +94,11 @@
 			draggable.setTitle('Information2');
 			var draggableElement = draggable.getElement();
 			document.body.appendChild(draggableElement);
-			setTimeout(() => draggable.collapse(true), 0);
+			// setTimeout(() => draggable.collapse(true), 0);
+			setTimeout(() => {
+				draggableElement.style.left = `-${draggableElement.offsetWidth - draggable.btnColExp.offsetWidth}px`;
+			}, 0);
+			
 		}
 		chrome.storage.sync.get(null, function(items) {
 			for (let key in items) {
@@ -203,5 +207,5 @@
 		let script = document.createElement('script');
 		script.appendChild(document.createTextNode('('+ injection.toString().replace('__Share__', JSON.stringify(Share)) +')();'));
 		(document.body || document.head || document.documentElement).appendChild(script);
-	// }
+	}
 })();

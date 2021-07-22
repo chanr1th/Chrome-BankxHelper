@@ -42,6 +42,9 @@ class Helper {
 	static isExacom() {
 		return (window.location.pathname.indexOf('/exacom.exalog.net/') !== -1);
 	}
+	static isSiteRoot() {
+		return (/site_[\w]*\/index\.php/.test(window.location.pathname));
+	}
 	static getSize(size) {
 		return parseInt(size.replace(/[^\d\.\-]/g, ''));
 	}
@@ -58,7 +61,7 @@ class Draggable {
 	body = null;
 	dragging = false;
 	toColExp = null;// Collapse & expand Timeout
-	pin = false;
+	#pin = false;
 	status = Draggable.STATE_COLLAPSE;
 	constructor(id) {
 		this.id = id;
@@ -85,9 +88,14 @@ class Draggable {
 				this.collapse();
 			}
 		});
+
 		this.btnPin = document.createElement("span");
 		this.btnPin.className = 'header-button';
-		this.btnPin.innerHTML = "Pin";
+		this.btnPin.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><g id="icon-pin" fill="#444" transform="scale(0.0234375 0.0234375)"><path d="M713.771 182.229c-16.597-16.683-43.563-16.768-60.331-0.171-4.437 4.437-7.509 9.685-9.6 15.147-35.499 74.069-74.581 115.84-123.904 140.501-55.339 27.307-118.869 46.293-221.269 46.293-5.547 0-11.093 1.067-16.299 3.243-10.453 4.352-18.731 12.672-23.083 23.083-4.309 10.411-4.309 22.187 0 32.597 2.176 5.248 5.291 9.984 9.259 13.909l138.368 138.368-193.579 258.133 258.133-193.579 138.325 138.325c3.925 4.011 8.661 7.083 13.909 9.259 5.205 2.176 10.752 3.328 16.299 3.328s11.093-1.152 16.299-3.328c10.453-4.352 18.773-12.587 23.083-23.083 2.176-5.163 3.285-10.752 3.285-16.256 0-102.4 18.944-165.931 46.208-220.416 24.619-49.323 66.389-88.405 140.501-123.904 5.504-2.091 10.709-5.163 15.104-9.6 16.597-16.768 16.512-43.733-0.171-60.331l-170.539-171.52z"/></g></svg>';
+		this.btnPin.querySelector('#icon-pin').setAttribute('fill', (this.pin ? "#FE9705" : "#444"));
+		if (this.pin) {
+			clearTimeout(this.toColExp);
+		}
 		this.btnPin.addEventListener("click", e => {
 			this.pin = !this.pin;
 		});
@@ -101,6 +109,17 @@ class Draggable {
 	}
 	set lastTop(lastTop) {
 		sessionStorage.setItem(`${this.id}_top`, lastTop);
+	}
+
+	get pin() {
+		return sessionStorage.getItem(`${this.id}_pin`) === 'true';
+	}
+	set pin(pinState) {
+		sessionStorage.setItem(`${this.id}_pin`, !!pinState);
+		this.btnPin.querySelector('#icon-pin').setAttribute('fill', (this.pin ? "#FE9705" : "#444"));
+		if (this.pin) {
+			clearTimeout(this.toColExp);
+		}
 	}
 
 	#onDragBegin(e) {
@@ -133,7 +152,9 @@ class Draggable {
 			let left = Helper.getSize(this.el.style.left);
 			if (left > 0) {
 				this.expand(true);
-				this.toColExp = setTimeout(this.collapse.bind(this), 3000);
+				if (!this.pin) {
+					this.toColExp = setTimeout(this.collapse.bind(this), 3000);
+				}
 			} else if (left < 0) {
 				this.collapse(true);
 			} else {
@@ -185,14 +206,16 @@ class Draggable {
 				// this.body.innerHTML = this.lastTop;
 				break;
 			case 'mouseenter':
-				if (Helper.getSize(this.el.style.left) < 0) {
+				if (Helper.getSize(this.el.style.left) < 0 && !this.pin) {
 					this.expand();
 				}
 				break;
 			case 'mouseleave':
 				if (Helper.getSize(this.el.style.left) == 0) {
 					clearTimeout(this.toColExp);
-					this.toColExp = setTimeout(this.collapse.bind(this), 3000);
+					if (!this.pin) {
+						this.toColExp = setTimeout(this.collapse.bind(this), 3000);
+					}
 				}
 				break;
 		}
@@ -206,7 +229,11 @@ class Draggable {
 		this.el.addEventListener("mouseenter", this);
 		this.el.addEventListener("mouseleave", this);
 		this.el.addEventListener("click", this);
-		document.addEventListener("click", this.collapse.bind(this));
+		document.addEventListener("click", function(e) {
+			if (!this.pin) {
+				this.collapse()
+			}
+		}.bind(this));
 		window.addEventListener('scroll', (e) => {
 			clearTimeout(this.toColExp);
 			this.toColExp = setTimeout(() => {
