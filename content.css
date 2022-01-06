@@ -1,55 +1,195 @@
-body.dark-mode {
-	background-color: gray !important;
+html.dark-mode {
+	--color: #FAFAFC;
+	--background: #1C1C28;
+	--background-accent: #3c3e5a;
+	--background-accent2: #4b4f7d;
 }
-body.dark-mode #home_intermediaire ul.Menu li ul.sMenu li a {
-	color: white;
+html.dark-mode ::selection {
+	background: highlight;
+}
+html.dark-mode
+, html.dark-mode body
+, html.dark-mode .contenu
+{
+	color: var(--color);
+	background-color: var(--background);
+}
+html.dark-mode .welcome
+, html.dark-mode .t
+, html.dark-mode .tb
+, html.dark-mode .tright
+, html.dark-mode .MessageAccueil
+, html.dark-mode .MessageUtilisation
+, html.dark-mode .messageutilisation
+, html.dark-mode .MessageInformation
+, html.dark-mode .TitreSection1
+, html.dark-mode .TitreSection2
+, html.dark-mode .titresection1
+, html.dark-mode .titresection2
+, html.dark-mode ul.menu-ul li.btn-menu ul.box-menu li span
+, html.dark-mode ul.menu-ul li.btn-menu ul.box-menu li ul.sMenu li a
+, html.dark-mode #home_intermediaire nav ul.Menu li span
+, html.dark-mode #home_intermediaire nav ul.Menu li ul.sMenu li a
+, html.dark-mode .Messagefacturation
+, html.dark-mode .ligne-compte
+, html.dark-mode .label
+, html.dark-mode .tableau-action-form tbody .label
+, html.dark-mode .align-center
+, html.dark-mode li.linked-li
+, html.dark-mode .soustitre
+, html.dark-mode .widget-footer-element
+{
+	color: var(--color);
+}
+html.dark-mode .onglet_actif /*tab background*/
+, html.dark-mode .margetabonglet /*tab background*/
+{
+	background-color: var(--background-accent);
+}
+html.dark-mode input
+, html.dark-mode select
+, html.dark-mode select option
+, html.dark-mode textarea
+, html.dark-mode button
+, html.dark-mode .widget
+, html.dark-mode .widget>*
+, html.dark-mode .widget .widget-alert-table
+, html.dark-mode .widget .widget-alert-header
+, html.dark-mode ul.menu-ul li.btn-menu ul.box-menu
+, html.dark-mode #home_intermediaire nav
+, html.dark-mode #actionBar
+, html.dark-mode .treso_tabt tbody
+, html.dark-mode .ligne-entete
+, html.dark-mode .tableau-action-form thead .ligne-entete
+, html.dark-mode .tab
+, html.dark-mode #recherche .tab
+, html.dark-mode .tabb
+, html.dark-mode .tab2
+, html.dark-mode .treso_tab2
+, html.dark-mode .pt
+, html.dark-mode .ptb
+, html.dark-mode .assistant
+, html.dark-mode .modal-wrapper
+, html.dark-mode .modal-wrapper .poppin-text
+, html.dark-mode .titre_onglet_actif
+, html.dark-mode .titre_onglet_actif_1
+, html.dark-mode .titre_onglet_actif_2
+, html.dark-mode .titre_onglet_actif_3
+, html.dark-mode .titre_onglet_actif_4
+, html.dark-mode .titre_onglet_actif_5
+, html.dark-mode .titre_onglet_actif_6
+, html.dark-mode .titre_onglet_actif_type1
+, html.dark-mode .titre_onglet_actif_type2
+, html.dark-mode .titre_onglet_actif_type5
+, html.dark-mode .soustitre span
+, html.dark-mode .profil_interface
+, html.dark-mode .regle-paquet
+, html.dark-mode .tableau-action-form tbody th.cellule
+, html.dark-mode .tableau-action-form tbody td.cellule
+, html.dark-mode div.zone-criteres-recherche
+, html.dark-mode table.zone-criteres-recherche
+, html.dark-mode div.zone-criteres-parametrage
+, html.dark-mode table.zone-criteres-parametrage
+, html.dark-mode .tranche-accueil
+, html.dark-mode .border-tranche1
+, html.dark-mode .border-tranche2
+, html.dark-mode .border-tranche3
+, html.dark-mode .border-tranche4
+, html.dark-mode .regle-paquet-container
+/*, html.dark-mode .dx-datagrid*/
+, html.dark-mode .button-group .bouton
+/*, html.dark-mode .dx-button-mode-contained*/
+/*, html.dark-mode .dx-button:not(.dx-closebutton):not(.dx-calendar-navigator-previous-view):not(.dx-calendar-caption-button):not(.dx-calendar-navigator-next-view)*/
+, html.dark-mode .tabt > tbody
+{
+	color: var(--color);
+	background-color: var(--background-accent);
+}
+/*force override inline style attribute or !important*/
+html.dark-mode .t select option/*Gestion des clients*/
+, html.dark-mode a.pagination
+, html.dark-mode #pagination a.pagination
+, html.dark-mode #pagination a.pagination.current
+, html.dark-mode #pagination span
+{
+	color: var(--color) !important;
+	background-color: var(--background-accent) !important;
+}
+html.dark-mode .header_tableau
+, html.dark-mode #sous-header
+/*, html.dark-mode .dx-datagrid-filter-row*/
+/*, html.dark-mode .dx-datagrid-rowsview .dx-row.dx-group-row:not(.dx-row-focused)*/
+{
+	color: var(--color);
+	background-color: var(--background-accent2);
+}
+html.dark-mode .treso_entetetab
+, html.dark-mode .treso_entetetab a
+, html.dark-mode .entetetab
+, html.dark-mode .entetetab a
+, html.dark-mode .entetetab2
+, html.dark-mode .entetetab2 a
+, html.dark-mode .entetetab3
+, html.dark-mode .entetetab3 a
+, html.dark-mode .entetetab4
+, html.dark-mode .entetetab4 a
+, html.dark-mode .entetetab222
+, html.dark-mode .entetetab222 a
+/*, html.dark-mode .dx-header-row td*/
+{
+	color: var(--color) !important;
+	background-color: var(--background-accent2) !important;
+}
+html.dark-mode .tableau-action-form tbody label.label:hover
+{
+	color: black;
+}
+html.dark-mode .soustitre span::before {
+	top: 100%;
+	z-index: 1;
 }
 
-/***Docker***/
-#dock {
-	position: absolute;
-	z-index: 1000;
-	font-size: 1rem;
-	border-radius: 2px;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
-	backdrop-filter: blur(20px);
-	background-color: rgba(255, 255, 255, 0.2);
+/*html.dark-mode #home_intermediaire ul.Menu li ul.sMenu li a {
+	color: white;
+}*/
+
+.flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
-#dock-header {
-	padding: 4px;
-	cursor: move;
-	font-weight: bold;
-	border-bottom: 1px solid lightgray;
-	transition: opacity ease-in-out .1s;
-}
-#_colexp {
-	cursor: pointer;
-	padding-left: 8px
-}
-#dock-content {
-	padding: 8px;
-}
+
+/***Draggable***/
 .draggable {
 	position: absolute;
-	z-index: 1000;
-	font-size: 1rem;
-	border-radius: 2px;
+	z-index: 3000;
+	font-size: 16px;
+	border-radius: 4px;
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
 	backdrop-filter: blur(20px);
 	background-color: rgba(255, 255, 255, 0.2);
+	visibility: hidden;
+	overflow: hidden;
+	line-height: 1.8;
 }
 .draggable-header {
-	padding: 4px;
+	padding: 0 4px;
 	cursor: move;
 	font-weight: bold;
-	border-bottom: 1px solid lightgray;
 	transition: opacity ease-in-out .1s;
+	display: flex;
+	align-items: center;
 }
-.draggable .header-button {
-	display: inline-block;
-	float: right;
+.draggable-header-title {
+	font-size: 1.2em;
+	margin-left: 4px;
+	flex-grow: 1;
+}
+.draggable-header-button {
+	color: gray;
 	cursor: pointer;
 	padding-left: 8px;
+	/*filter: drop-shadow(gray 0 0 1px);*/
 }
 .draggable-body {
 	padding: 8px;
@@ -66,6 +206,7 @@ body.dark-mode #home_intermediaire ul.Menu li ul.sMenu li a {
 	white-space: nowrap;
 	margin-top:  -10px;
 	box-shadow: 0px 6px 5px -3px rgb(0, 0, 0, 0.2);
+	text-align: left;
 	/*filter: drop-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.5));*/
 }
 .popover-body {
@@ -90,14 +231,11 @@ body.dark-mode #home_intermediaire ul.Menu li ul.sMenu li a {
 	);
 }
 .popover-close {
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	position: absolute;
-	top: 10px;
+	top: 12px;
 	right: 3px;
-	width: 1rem;
-	height: 1rem;
+	width: 1em;
+	height: 1em;
 	cursor: pointer;
 	line-height: 0;
 	color: gray;

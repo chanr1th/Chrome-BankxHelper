@@ -14,6 +14,7 @@ function setUpContextMenus() {
 }
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
 	if (info.menuItemId === 'show_element_info') {
+		// console.log('__JAVASCRIPT_TYPE_CLIENT', __JAVASCRIPT_TYPE_CLIENT);
 		chrome.tabs.sendMessage(tab.id, "showPopover", {frameId: info.frameId});
 	}
 });
