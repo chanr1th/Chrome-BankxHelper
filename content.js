@@ -9,6 +9,9 @@
 				this.appEnable = true;
 				this.showDock = true;
 				this.darkMode = false;
+				this.automation = false;
+				this.autoComplete = true;
+				this.autoSubmit = false;
 			}
 			refresh() {
 				return new Promise((resolve, reject) => chrome.storage.sync.get(null, data => {
@@ -68,12 +71,12 @@
 				this.config[key] = value;
 			}
 			load() {
-				this.addAutoComplete();
+				this.addAutomation();
 				this.addPopoverHint();
 				this.addFloatingDock();
 			}
-			addAutoComplete() {
-				if (this.config.appEnable) {
+			addAutomation() {
+				if (this.config.appEnable && this.config.automation && this.config.autoComplete) {
 					// auto fill password in admin
 					let mdp = document.querySelector("[name=motdepasse]");
 					if (mdp) {
@@ -89,26 +92,29 @@
 							});
 							username.addEventListener('input', (e) => {
 								if (!this.config.appEnable) return;
+								let ulist = [
+									'jduchemin',
+									'glafarge',
+									'jlafarge',
+									'cpagnol',
+									'jalonso',
+									'tandre',
+									'sbombart',
+									'lmeng',
+									'exalog'
+								];
+								let found = null;
 								if (e.target.value.length == 2) {
-									let ulist = [
-										'jduchemin',
-										'glafarge',
-										'jlafarge',
-										'cpagnol',
-										'jalonso',
-										'tandre',
-										'sbombart',
-										'lmeng',
-										'exalog'
-									];
-									let found = ulist.find(n => e.target.value.startsWith(n.substring(0, 2)));
+									found = ulist.find(n => e.target.value.startsWith(n.substring(0, 2)));
 									if (found) e.target.value = found; else return;
-									password.value = '111111';
-									let formValider = document.querySelector('[name=form_valider]')
-									if (formValider) {
-										formValider.click();
-									}
+								} else if (this.config.autoSubmit && ulist.indexOf(e.target.value) !== -1) {
+									found = e.target.value;
 								}
+								password.value = '111111';
+								if (found && this.config.autoSubmit) {
+									let formValider = document.querySelector('[name=form_valider]').click();
+								}
+
 							});
 						}
 						// password.focus();
@@ -120,12 +126,12 @@
 						for (let i=0; i<4; i++) {
 							grid.click();
 						}
-						// if (ORGINE === "authent_grid") {//auto submit
+						if (this.config.autoSubmit) {
 							document.getElementById("form_validate_grid").click();
-						// }
+						}
 					} else if(this.orgine == 'multiple_sessions_confirmer') {
 						let userSession = document.getElementById("form_confirmation_bouton_annuler");
-						if (userSession) {
+						if (userSession && this.config.autoSubmit) {
 							userSession.click();
 						}
 					} else {

@@ -43,6 +43,7 @@ html.dark-mode .welcome
 }
 html.dark-mode .onglet_actif /*tab background*/
 , html.dark-mode .margetabonglet /*tab background*/
+, html.dark-mode .alertParamLinkManagerTab
 {
 	background-color: var(--background-accent);
 }
@@ -147,6 +148,25 @@ html.dark-mode .tableau-action-form tbody label.label:hover
 html.dark-mode .soustitre span::before {
 	top: 100%;
 	z-index: 1;
+}
+
+html.dark-mode .header-btn-container,
+html.dark-mode #actionBar {
+	background: var(--background-accent2) !important;
+}
+html.dark-mode .header-btn-container .TitreSection1 ~ div:not(#pop_aide),
+html.dark-mode #actionBar .btn-group {
+	background: var(--background-accent) !important;
+}
+
+html.dark-mode #actionBar .btn-group,
+html.dark-mode .header-btn-container .TitreSection1 ~ div:not(#pop_aide) {
+	overflow: hidden;
+}
+html.dark-mode #actionBar .btn-group::before,
+html.dark-mode .header-btn-container .TitreSection1 ~ div:not(#pop_aide)::before {
+	filter: drop-shadow(3em 0 0px var(--background-accent2)) !important;
+	left: -3em;
 }
 
 /*html.dark-mode #home_intermediaire ul.Menu li ul.sMenu li a {

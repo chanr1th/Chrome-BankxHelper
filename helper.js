@@ -5,11 +5,28 @@ class Helper {
 	}
 	static showPopoverOn(element) {
 		let popover = document.createElement('div');
+		//
+		// 
 		// let elementPosition = this.getDocumentOffsetPosition(element);
-		let elementRect = element.getBoundingClientRect();
-		popover.style.left = parseInt(elementRect.left)+'px';
 		// popover.style.left = parseInt(elementPosition.left)+'px';
 		// popover.style.top = parseInt(elementPosition.top + elementRect.height)+'px';
+		// 
+		// popover.style.left = parseInt(element.offsetLeft)+'px';
+		// popover.style.top = parseInt(element.offsetTop+element.offsetHeight)+'px';
+		// 
+		switch (window.getComputedStyle(element.parentElement).display) {
+			case 'table-cell':
+				break;
+			case 'flex':
+				popover.style.left = parseInt(element.offsetLeft)+'px';
+				popover.style.top = parseInt(element.offsetTop+element.offsetHeight)+'px';
+				break;
+			default: //static
+				let elementRect = element.getBoundingClientRect();
+				popover.style.left = parseInt(elementRect.left)+'px';
+				popover.style.top = parseInt(elementRect.bottom)+'px';
+				break;
+		}
 		popover.className = 'popover';
 		let body = document.createElement('div');
 		body.className = 'popover-body';
@@ -33,6 +50,7 @@ class Helper {
 		popover.appendChild(close);
 		// element.parentNode.insertBefore(popover, element.nextSibling);
 		element.parentNode.appendChild(popover, element.nextSibling);
+		// document.body.appendChild(popover);
 		// setTimeout(() => popover.remove(), 5000);//self destroy
 	}
 	static getOrigine() {

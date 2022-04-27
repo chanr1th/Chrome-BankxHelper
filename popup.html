@@ -2,6 +2,10 @@
 <html>
 <head>
 	<style>
+	main {
+		min-width: 192px;
+	}
+
 	.nowrap {
 		white-space: nowrap;
 	}
@@ -62,6 +66,27 @@
 		transform: translateX(13px);
 	}
 
+	.checkboxes label {
+		display: inline-block;
+		padding-right: 10px;
+		white-space: nowrap;
+	}
+	.checkboxes input {
+		vertical-align: middle;
+	}
+	.checkboxes label span {
+		vertical-align: middle;
+	}
+	.checkboxes input[disabled] + span {
+		color: gray;
+	}
+
+	details.disabled * {
+		pointer-events: none;
+		user-select: none;
+		color: gray;
+	}
+
 	/* Rounded sliders */
 	.slider.round {
 		border-radius: 17px;
@@ -73,61 +98,65 @@
 </style>
 </head>
 <body>
-	<h3 id="title" class="nowrap" style="text-align: center;">Settings</h3>
-	<table>
-		<tbody>
-			<tr>
-				<td class="nowrap">
-					<label for="app-enable">App Enable</label>
-				</td>
-				<td>
-					<label class="switch">
-						<input type="checkbox" id="app-enable" checked="checked">
-						<span class="slider" ></span>
-					</label>
-				</td>
-			</tr>
-			<tr>
-				<td class="nowrap">
-					<label for="show-dock">Show Dock</label>
-				</td>
-				<td>
-					<label class="switch">
-						<input type="checkbox" id="show-dock">
-						<span class="slider round" ></span>
-					</label>
-				</td>
-			</tr>
-			<tr>
-				<td class="nowrap">
-					<label for="dark-mode">Dark Mode</label>
-				</td>
-				<td>
-					<label class="switch">
-						<input type="checkbox" id="dark-mode">
-						<span class="slider round" ></span>
-					</label>
-				</td>
-			</tr>
-			<tr>
-				<td class="nowrap">
-					<label for="stick-position">Stick Position</label>
-				</td>
-				<td>
-					<select id="stick-position">
-						<option value="left">Left</option>
-						<option value="right">Right</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>Create Bookmark:</td>
-				<td>
-					<input type="button" id="create-bookmark" value="Create Bookmark">
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<header>
+		<h3 id="title" class="nowrap" style="text-align: center;">Settings</h3>
+	</header>
+	<main>
+		<table>
+			<tbody>
+				<tr>
+					<td>
+						<label class="switch">
+							<input type="checkbox" id="checkbox-app-enable" checked="checked">
+							<span class="slider" ></span>
+						</label>
+					</td>
+					<td class="nowrap">
+						<label for="app-enable">App Enable</label>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<label class="switch">
+							<input type="checkbox" id="checkbox-automation">
+							<span class="slider round" ></span>
+						</label>
+					</td>
+					<td class="nowrap" valign="top">
+						<details id="details-automation" open>
+							<summary>Automation</summary>
+							<div class="checkboxes">
+								<label><input type="checkbox" id="checkbox-auto-complete"><span>Auto Complete</span></label><br>
+								<label><input type="checkbox" id="checkbox-auto-submit"><span>Auto Submit</span></label>
+							</div>
+						</details>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="switch">
+							<input type="checkbox" id="checkbox-show-dock">
+							<span class="slider round" ></span>
+						</label>
+					</td>
+					<td class="nowrap">
+						<label for="show-dock">Show Dock</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label class="switch">
+							<input type="checkbox" id="checkbox-dark-mode">
+							<span class="slider round" ></span>
+						</label>
+					</td>
+					<td class="nowrap">
+						<label for="dark-mode">Dark Mode</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</main>
 	<!-- <div>Search Bookmarks: <input id="search"></div>
 	<div id="bookmarks"></div>
 	<div id="editdialog"></div>
