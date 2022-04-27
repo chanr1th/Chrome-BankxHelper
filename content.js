@@ -165,43 +165,27 @@
 			}
 			addFloatingDock() {
 				document.body.appendChild(this.draggable.getElement());
-				this.draggable.setTitle('Information').show();
+				let infoLines = [];
+				infoLines.push(`${this.formOrigine}=${this.orgine}`);
+				let favList = Array.from(document.querySelectorAll(".fav-star.active+a"));
+				let favorite = '<u>Favorite List:</u><br>';
+				if (favList.length > 0) {
+					favorite += '<ul style="margin-left:18px">';
+					favList.forEach(el => {
+						favorite += `<li>${el.outerHTML}</li>`;
+					});
+					favorite += '</ul>';
+				}
+				infoLines.push(favorite)
+				let bodyContent = infoLines.join("<br/>");
+				this.draggable
+					.setTitle('Information')
+					.setBody(bodyContent)
+					.show();
 				// setTimeout(() => draggable.collapse(true), 0);
 				// setTimeout(() => {
 				// 	draggableElement.style.left = `-${draggableElement.offsetWidth - draggable.btnColExp.offsetWidth}px`;
 				// }, 0);
-				// inject to conent
-				let injection = function() {
-					console.log('Bankx-helper : Content script injected.');
-					let Share = JSON.parse('__SHARE__');
-					let draggableElement = document.getElementById(Share.dockId);
-					if (draggableElement) {
-						let content = draggableElement.querySelector('.draggable-body');
-						let favList = Array.from(document.querySelectorAll(".fav-star.active+a"));
-						let favorite = '';
-						if (favList.length > 0) {
-							favorite += '<ul style="margin-left:18px">';
-							favList.forEach(el => {
-								favorite += `<li>${el.outerHTML}</li>`;
-							});
-							favorite += '</ul>';
-						}
-						let pageInfo = [];
-						if (typeof __JAVASCRIPT_EMETTEUR !== 'undefined') {
-							pageInfo.push(`Emetteur=${__JAVASCRIPT_EMETTEUR}`);
-						}
-						if (typeof __JAVASCRIPT_TYPE_CLIENT !== 'undefined') {
-							pageInfo.push(`TypeClient=${__JAVASCRIPT_TYPE_CLIENT}`);
-						}
-						pageInfo.push(`${Share.origin_name}=${Share.origin_value}`);
-						content.innerHTML = pageInfo.join("<br/>");
-						content.innerHTML += '<br>';
-						content.innerHTML += favorite;
-					}
-				}
-				let script = document.createElement('script');
-				script.appendChild(document.createTextNode('('+ injection.toString().replace('__SHARE__', JSON.stringify(this.share)) +')();'));
-				(document.body || document.head || document.documentElement).appendChild(script);
 			}
 		}
 		//Init

@@ -1,18 +1,15 @@
 {
     "name": "BankX Helper",
-    "version": "0.1",
-    "manifest_version": 2,
-    "description": "Chrome extension for assisting the developement",
+    "version": "0.2",
+    "manifest_version": 3,
+    "description": "Assist BankX developer",
     "permissions": [
         "storage"
         , "contextMenus"
         , "tabs"
     ],
     "background": {
-        "scripts": [
-            "background.js"
-        ],
-        "persistent": false
+        "service_worker": "background.js"
     },
     "content_scripts": [
       {
@@ -38,7 +35,7 @@
       }
     ],
     "options_page": "options.html",
-    "browser_action": {
+    "action": {
         "default_popup": "popup.html",
         "default_icon": {
             "16": "images/icon16.png",
@@ -52,6 +49,5 @@
         "32": "images/icon32.png",
         "48": "images/icon48.png",
         "128": "images/icon128.png"
-    },
-    "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
+    }
 }

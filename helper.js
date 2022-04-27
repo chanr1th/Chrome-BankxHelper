@@ -237,6 +237,11 @@ class Draggable {
 		return this;
 	}
 
+	setBody(html) {
+		this.body.innerHTML = html;
+		return this;
+	}
+
 	hide() {
 		this.el.style.visibility = 'hidden';
 		return this;
