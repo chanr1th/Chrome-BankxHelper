@@ -12,69 +12,69 @@ darkMode.onchange = () => chrome.storage.sync.set({"darkMode": !!event.target.ch
 let checkboxAutomation = document.getElementById('checkbox-automation');
 let detailsAutomation = document.getElementById('details-automation');
 checkboxAutomation.onchange = function() {
-	chrome.storage.sync.set({"automation": !!event.target.checked});
-	detailsAutomation.classList.toggle('disabled', !event.target.checked);
+    chrome.storage.sync.set({"automation": !!event.target.checked});
+    detailsAutomation.classList.toggle('disabled', !event.target.checked);
 }
 let checkboxAutoComplete = document.getElementById('checkbox-auto-complete');
 let checkboxAutoSubmit = document.getElementById('checkbox-auto-submit');
 checkboxAutoComplete.onchange = function() {
-	chrome.storage.sync.set({"autoComplete": !!event.target.checked});
-	checkboxAutoSubmit.toggleAttribute('disabled', !event.target.checked);
+    chrome.storage.sync.set({"autoComplete": !!event.target.checked});
+    checkboxAutoSubmit.toggleAttribute('disabled', !event.target.checked);
 }
 checkboxAutoSubmit.onchange = () => chrome.storage.sync.set({"autoSubmit": !!event.target.checked});
 
 
 chrome.storage.sync.get(null, function(items) {
-	for (let key in items) {
-		let value = items[key];
-		switch(key) {
-			case 'appEnable':
-				appEnable.checked = value;
-				showDock.disabled = !value;
-				darkMode.disabled = !value;
-				checkboxAutomation.disabled = !value;
-				detailsAutomation.classList.toggle('disabled', !value);
-				break;
-			case 'showDock':
-				showDock.checked = value;
-				break;
-			case 'darkMode':
-				darkMode.checked = value;
-				break;
-			case 'automation':
-				checkboxAutomation.checked = value;
-				break;
-			case 'autoComplete':
-				checkboxAutoComplete.checked = value;
-				checkboxAutoSubmit.toggleAttribute('disabled', !value);
-				break;
-			case 'autoSubmit':
-				checkboxAutoSubmit.checked = value;
-				break;
-		}
-	}
+    for (let key in items) {
+        let value = items[key];
+        switch(key) {
+            case 'appEnable':
+                appEnable.checked = value;
+                showDock.disabled = !value;
+                darkMode.disabled = !value;
+                checkboxAutomation.disabled = !value;
+                detailsAutomation.classList.toggle('disabled', !value);
+                break;
+            case 'showDock':
+                showDock.checked = value;
+                break;
+            case 'darkMode':
+                darkMode.checked = value;
+                break;
+            case 'automation':
+                checkboxAutomation.checked = value;
+                break;
+            case 'autoComplete':
+                checkboxAutoComplete.checked = value;
+                checkboxAutoSubmit.toggleAttribute('disabled', !value);
+                break;
+            case 'autoSubmit':
+                checkboxAutoSubmit.checked = value;
+                break;
+        }
+    }
 });
 
 // let createBookmark = document.getElementById('create-bookmark');
 // createBookmark.onclick = function() {
-// 	// chrome.bookmarks.create({'parentId': bookmarkBar.id, 'title': 'Extension bookmarks'}, function(newFolder) {
-// 	// 	console.log("added folder: " + newFolder.title);
-// 	// });
-// 	chrome.bookmarks.getTree(function(bookmarkTreeNodes) {console.log(bookmarkTreeNodes);});
+//  // chrome.bookmarks.create({'parentId': bookmarkBar.id, 'title': 'Extension bookmarks'}, function(newFolder) {
+//  //  console.log("added folder: " + newFolder.title);
+//  // });
+//  chrome.bookmarks.getTree(function(bookmarkTreeNodes) {console.log(bookmarkTreeNodes);});
 // }
 
 chrome.storage.onChanged.addListener(function(changes, namespace) {
-	for (let key in changes) {
-		let newValue = changes[key].newValue;
-		switch(key) {
-			case 'appEnable':
-				showDock.disabled = !newValue;
-				darkMode.disabled = !newValue;
-				checkboxAutomation.disabled = !newValue;
-				detailsAutomation.classList.toggle('disabled', !newValue);
-				break;
-		}
-	}
+    for (let key in changes) {
+        let newValue = changes[key].newValue;
+        switch(key) {
+            case 'appEnable':
+                showDock.disabled = !newValue;
+                darkMode.disabled = !newValue;
+                checkboxAutomation.disabled = !newValue;
+                detailsAutomation.classList.toggle('disabled', !newValue);
+                break;
+        }
+    }
 });
 
 ///////////////////////////////test

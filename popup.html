@@ -1,168 +1,168 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style>
-	main {
-		min-width: 192px;
-	}
+    <style>
+        main {
+            min-width: 192px;
+        }
 
-	.nowrap {
-		white-space: nowrap;
-	}
+        .nowrap {
+            white-space: nowrap;
+        }
 
-	/*Switch*/
-	.switch {
-		position: relative;
-		display: inline-block;
-		width: 30px;
-		height: 17px;
-	}
+        /*Switch*/
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 30px;
+            height: 17px;
+        }
 
-	/* Hide default HTML checkbox */
-	.switch input {
-		opacity: 0;
-		width: 0;
-		height: 0;
-	}
+        /* Hide default HTML checkbox */
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
-	/* The slider */
-	.slider {
-		position: absolute;
-		cursor: pointer;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background-color: #ccc;
-		-webkit-transition: .4s;
-		transition: .4s;
-	}
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
 
-	.slider:before {
-		position: absolute;
-		content: "";
-		height: 13px;
-		width: 13px;
-		left: 2px;
-		bottom: 2px;
-		background-color: white;
-		-webkit-transition: .4s;
-		transition: .4s;
-	}
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 13px;
+            width: 13px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
 
-	input:checked + .slider {
-		background-color: #2196F3;
-	}
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
 
-	input:checked:disabled + .slider {
-		background-color: #6691b3;
-	}
+        input:checked:disabled + .slider {
+            background-color: #6691b3;
+        }
 
-	input:focus + .slider {
-		box-shadow: 0 0 1px #2196F3;
-	}
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
 
-	input:checked + .slider:before {
-		transform: translateX(13px);
-	}
+        input:checked + .slider:before {
+            transform: translateX(13px);
+        }
 
-	.checkboxes label {
-		display: inline-block;
-		padding-right: 10px;
-		white-space: nowrap;
-	}
-	.checkboxes input {
-		vertical-align: middle;
-	}
-	.checkboxes label span {
-		vertical-align: middle;
-	}
-	.checkboxes input[disabled] + span {
-		color: gray;
-	}
+        .checkboxes label {
+            display: inline-block;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+        .checkboxes input {
+            vertical-align: middle;
+        }
+        .checkboxes label span {
+            vertical-align: middle;
+        }
+        .checkboxes input[disabled] + span {
+            color: gray;
+        }
 
-	details.disabled * {
-		pointer-events: none;
-		user-select: none;
-		color: gray;
-	}
+        details.disabled * {
+            pointer-events: none;
+            user-select: none;
+            color: gray;
+        }
 
-	/* Rounded sliders */
-	.slider.round {
-		border-radius: 17px;
-	}
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 17px;
+        }
 
-	.slider.round:before {
-		border-radius: 50%;
-	}
-</style>
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
-	<header>
-		<h3 id="title" class="nowrap" style="text-align: center;">Settings</h3>
-	</header>
-	<main>
-		<table>
-			<tbody>
-				<tr>
-					<td>
-						<label class="switch">
-							<input type="checkbox" id="checkbox-app-enable" checked="checked">
-							<span class="slider" ></span>
-						</label>
-					</td>
-					<td class="nowrap">
-						<label for="app-enable">App Enable</label>
-					</td>
-				</tr>
-				<tr>
-					<td valign="top">
-						<label class="switch">
-							<input type="checkbox" id="checkbox-automation">
-							<span class="slider round" ></span>
-						</label>
-					</td>
-					<td class="nowrap" valign="top">
-						<details id="details-automation" open>
-							<summary>Automation</summary>
-							<div class="checkboxes">
-								<label><input type="checkbox" id="checkbox-auto-complete"><span>Auto Complete</span></label><br>
-								<label><input type="checkbox" id="checkbox-auto-submit"><span>Auto Submit</span></label>
-							</div>
-						</details>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label class="switch">
-							<input type="checkbox" id="checkbox-show-dock">
-							<span class="slider round" ></span>
-						</label>
-					</td>
-					<td class="nowrap">
-						<label for="show-dock">Show Dock</label>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label class="switch">
-							<input type="checkbox" id="checkbox-dark-mode">
-							<span class="slider round" ></span>
-						</label>
-					</td>
-					<td class="nowrap">
-						<label for="dark-mode">Dark Mode</label>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</main>
-	<!-- <div>Search Bookmarks: <input id="search"></div>
-	<div id="bookmarks"></div>
-	<div id="editdialog"></div>
-	<div id="deletedialog"></div>
-	<div id="adddialog"></div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
-	<script src="popup.js"></script>
+    <header>
+        <h3 id="title" class="nowrap" style="text-align: center;">Settings</h3>
+    </header>
+    <main>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" id="checkbox-app-enable" checked="checked">
+                            <span class="slider" ></span>
+                        </label>
+                    </td>
+                    <td class="nowrap">
+                        <label for="app-enable">App Enable</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top">
+                        <label class="switch">
+                            <input type="checkbox" id="checkbox-automation">
+                            <span class="slider round" ></span>
+                        </label>
+                    </td>
+                    <td class="nowrap" valign="top">
+                        <details id="details-automation" open>
+                            <summary>Automation</summary>
+                            <div class="checkboxes">
+                                <label><input type="checkbox" id="checkbox-auto-complete"><span>Auto Complete</span></label><br>
+                                <label><input type="checkbox" id="checkbox-auto-submit"><span>Auto Submit</span></label>
+                            </div>
+                        </details>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" id="checkbox-show-dock">
+                            <span class="slider round" ></span>
+                        </label>
+                    </td>
+                    <td class="nowrap">
+                        <label for="show-dock">Show Dock</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" id="checkbox-dark-mode">
+                            <span class="slider round" ></span>
+                        </label>
+                    </td>
+                    <td class="nowrap">
+                        <label for="dark-mode">Dark Mode</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <!-- <div>Search Bookmarks: <input id="search"></div>
+    <div id="bookmarks"></div>
+    <div id="editdialog"></div>
+    <div id="deletedialog"></div>
+    <div id="adddialog"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+    <script src="popup.js"></script>
 </body>
 </html>

@@ -1,18 +1,18 @@
 html.dark-mode {
-	--color: #FAFAFC;
-	--background: #1C1C28;
-	--background-accent: #3c3e5a;
-	--background-accent2: #4b4f7d;
+    --color: #FAFAFC;
+    --background: #1C1C28;
+    --background-accent: #3c3e5a;
+    --background-accent2: #4b4f7d;
 }
 html.dark-mode ::selection {
-	background: highlight;
+    background: highlight;
 }
 html.dark-mode
 , html.dark-mode body
 , html.dark-mode .contenu
 {
-	color: var(--color);
-	background-color: var(--background);
+    color: var(--color);
+    background-color: var(--background);
 }
 html.dark-mode .welcome
 , html.dark-mode .t
@@ -39,13 +39,13 @@ html.dark-mode .welcome
 , html.dark-mode .soustitre
 , html.dark-mode .widget-footer-element
 {
-	color: var(--color);
+    color: var(--color);
 }
 html.dark-mode .onglet_actif /*tab background*/
 , html.dark-mode .margetabonglet /*tab background*/
 , html.dark-mode .alertParamLinkManagerTab
 {
-	background-color: var(--background-accent);
+    background-color: var(--background-accent);
 }
 html.dark-mode input
 , html.dark-mode select
@@ -103,8 +103,8 @@ html.dark-mode input
 /*, html.dark-mode .dx-button:not(.dx-closebutton):not(.dx-calendar-navigator-previous-view):not(.dx-calendar-caption-button):not(.dx-calendar-navigator-next-view)*/
 , html.dark-mode .tabt > tbody
 {
-	color: var(--color);
-	background-color: var(--background-accent);
+    color: var(--color);
+    background-color: var(--background-accent);
 }
 /*force override inline style attribute or !important*/
 html.dark-mode .t select option/*Gestion des clients*/
@@ -113,16 +113,16 @@ html.dark-mode .t select option/*Gestion des clients*/
 , html.dark-mode #pagination a.pagination.current
 , html.dark-mode #pagination span
 {
-	color: var(--color) !important;
-	background-color: var(--background-accent) !important;
+    color: var(--color) !important;
+    background-color: var(--background-accent) !important;
 }
 html.dark-mode .header_tableau
 , html.dark-mode #sous-header
 /*, html.dark-mode .dx-datagrid-filter-row*/
 /*, html.dark-mode .dx-datagrid-rowsview .dx-row.dx-group-row:not(.dx-row-focused)*/
 {
-	color: var(--color);
-	background-color: var(--background-accent2);
+    color: var(--color);
+    background-color: var(--background-accent2);
 }
 html.dark-mode .treso_entetetab
 , html.dark-mode .treso_entetetab a
@@ -138,125 +138,125 @@ html.dark-mode .treso_entetetab
 , html.dark-mode .entetetab222 a
 /*, html.dark-mode .dx-header-row td*/
 {
-	color: var(--color) !important;
-	background-color: var(--background-accent2) !important;
+    color: var(--color) !important;
+    background-color: var(--background-accent2) !important;
 }
 html.dark-mode .tableau-action-form tbody label.label:hover
 {
-	color: black;
+    color: black;
 }
 html.dark-mode .soustitre span::before {
-	top: 100%;
-	z-index: 1;
+    top: 100%;
+    z-index: 1;
 }
 
 html.dark-mode .header-btn-container,
 html.dark-mode #actionBar {
-	background: var(--background-accent2) !important;
+    background: var(--background-accent2) !important;
 }
 html.dark-mode .header-btn-container .TitreSection1 ~ div:not(#pop_aide),
 html.dark-mode #actionBar .btn-group {
-	background: var(--background-accent) !important;
+    background: var(--background-accent) !important;
 }
 
 html.dark-mode #actionBar .btn-group,
 html.dark-mode .header-btn-container .TitreSection1 ~ div:not(#pop_aide) {
-	overflow: hidden;
+    overflow: hidden;
 }
 html.dark-mode #actionBar .btn-group::before,
 html.dark-mode .header-btn-container .TitreSection1 ~ div:not(#pop_aide)::before {
-	filter: drop-shadow(3em 0 0px var(--background-accent2)) !important;
-	left: -3em;
+    filter: drop-shadow(3em 0 0px var(--background-accent2)) !important;
+    left: -3em;
 }
 
 /*html.dark-mode #home_intermediaire ul.Menu li ul.sMenu li a {
-	color: white;
+    color: white;
 }*/
 
 .flex-center {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /***Draggable***/
 .draggable {
-	position: absolute;
-	z-index: 3000;
-	font-size: 16px;
-	border-radius: 4px;
-	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
-	backdrop-filter: blur(20px);
-	background-color: rgba(255, 255, 255, 0.2);
-	visibility: hidden;
-	overflow: hidden;
-	line-height: 1.8;
+    position: absolute;
+    z-index: 3000;
+    font-size: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.2);
+    visibility: hidden;
+    overflow: hidden;
+    line-height: 1.8;
 }
 .draggable-header {
-	padding: 0 4px;
-	cursor: move;
-	font-weight: bold;
-	transition: opacity ease-in-out .1s;
-	display: flex;
-	align-items: center;
+    padding: 0 4px;
+    cursor: move;
+    font-weight: bold;
+    transition: opacity ease-in-out .1s;
+    display: flex;
+    align-items: center;
 }
 .draggable-header-title {
-	font-size: 1.2em;
-	margin-left: 4px;
-	flex-grow: 1;
+    font-size: 1.2em;
+    margin-left: 4px;
+    flex-grow: 1;
 }
 .draggable-header-button {
-	color: gray;
-	cursor: pointer;
-	padding-left: 8px;
-	/*filter: drop-shadow(gray 0 0 1px);*/
+    color: gray;
+    cursor: pointer;
+    padding-left: 8px;
+    /*filter: drop-shadow(gray 0 0 1px);*/
 }
 .draggable-body {
-	padding: 8px;
+    padding: 8px;
 }
 
 /***Popover***/
 .popover {
-	opacity: 1;
-	visibility: visible;
-	position: absolute;
-	transform: translate(0, 10px);
-	width: auto;
-	z-index: 1000;
-	white-space: nowrap;
-	margin-top:  -10px;
-	box-shadow: 0px 6px 5px -3px rgb(0, 0, 0, 0.2);
-	text-align: left;
-	/*filter: drop-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.5));*/
+    opacity: 1;
+    visibility: visible;
+    position: absolute;
+    transform: translate(0, 10px);
+    width: auto;
+    z-index: 1000;
+    white-space: nowrap;
+    margin-top:  -10px;
+    box-shadow: 0px 6px 5px -3px rgb(0, 0, 0, 0.2);
+    text-align: left;
+    /*filter: drop-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.5));*/
 }
 .popover-body {
-	padding: 22px 24px 12px 12px;
-	backdrop-filter: blur(20px);
-	background-image: linear-gradient(to bottom, rgba(200,200,200,0.1), rgba(255,255,255,0.1));
-	clip-path: polygon(0% 10px, 10px 10px, 20px 0, 30px 10px, 100% 10px, 100% 100%, 0 100%);
+    padding: 22px 24px 12px 12px;
+    backdrop-filter: blur(20px);
+    background-image: linear-gradient(to bottom, rgba(200,200,200,0.1), rgba(255,255,255,0.1));
+    clip-path: polygon(0% 10px, 10px 10px, 20px 0, 30px 10px, 100% 10px, 100% 100%, 0 100%);
 }
 .popover-body::after {
-	content: '';
-	background: rgba(200, 200, 200, 0.2);
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	clip-path: polygon(
-		0 11px, 0 10px
-		, 10px 10px, 20px 0, 30px 10px
-		, 100% 10px, 100% 100%, 0 100%, 0 11px, 1px 11px, 1px calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 11px
-		, 29px 11px, 20px 1px, 11px 11px
-	);
+    content: '';
+    background: rgba(200, 200, 200, 0.2);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    clip-path: polygon(
+        0 11px, 0 10px
+        , 10px 10px, 20px 0, 30px 10px
+        , 100% 10px, 100% 100%, 0 100%, 0 11px, 1px 11px, 1px calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) 11px
+        , 29px 11px, 20px 1px, 11px 11px
+    );
 }
 .popover-close {
-	position: absolute;
-	top: 12px;
-	right: 3px;
-	width: 1em;
-	height: 1em;
-	cursor: pointer;
-	line-height: 0;
-	color: gray;
+    position: absolute;
+    top: 12px;
+    right: 3px;
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+    line-height: 0;
+    color: gray;
 }
