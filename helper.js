@@ -143,7 +143,7 @@ class Draggable {
     }
 
     get lastTop() {
-        return Number(sessionStorage.getItem(`${this.id}_top`) ?? 18);
+        return Number(sessionStorage.getItem(`${this.id}_top`) ?? 60);
     }
     set lastTop(lastTop) {
         sessionStorage.setItem(`${this.id}_top`, lastTop);

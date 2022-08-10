@@ -38,6 +38,8 @@ html.dark-mode .welcome
 , html.dark-mode li.linked-li
 , html.dark-mode .soustitre
 , html.dark-mode .widget-footer-element
+, html.dark-mode .card__title
+, html.dark-mode .select2-container .select2-results .select2-results__option[aria-selected=false]
 {
     color: var(--color);
 }
@@ -50,6 +52,11 @@ html.dark-mode .onglet_actif /*tab background*/
 html.dark-mode input
 , html.dark-mode select
 , html.dark-mode select option
+, html.dark-mode .select2 .selection .select2-selection
+, html.dark-mode .select2 .selection .select2-selection .select2-selection__rendered
+, html.dark-mode .select2-container .select2-dropdown
+, html.dark-mode .select2-container .select2-dropdown .select2-search .select2-search__field
+, html.dark-mode .select2-container .select2-results .select2-results__options
 , html.dark-mode textarea
 , html.dark-mode button
 , html.dark-mode .widget
@@ -102,9 +109,12 @@ html.dark-mode input
 /*, html.dark-mode .dx-button-mode-contained*/
 /*, html.dark-mode .dx-button:not(.dx-closebutton):not(.dx-calendar-navigator-previous-view):not(.dx-calendar-caption-button):not(.dx-calendar-navigator-next-view)*/
 , html.dark-mode .tabt > tbody
+, html.dark-mode .system-info
+, html.dark-mode .zone-criteres-parametrage .soustitre-lvl-2
+, html.dark-mode .zone-criteres-parametrage .soustitre-lvl-2 span
 {
     color: var(--color);
-    background-color: var(--background-accent);
+    background: var(--background-accent);
 }
 /*force override inline style attribute or !important*/
 html.dark-mode .t select option/*Gestion des clients*/

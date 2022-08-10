@@ -168,7 +168,7 @@
                 let infoLines = [];
                 infoLines.push(`${this.formOrigine}=${this.orgine}`);
                 let favList = Array.from(document.querySelectorAll(".fav-star.active+a"));
-                let favorite = '<u>Favorite List:</u><br>';
+                let favorite = '<em>Favorite List:</em><br>';
                 if (favList.length > 0) {
                     favorite += '<ul style="margin-left:18px">';
                     favList.forEach(el => {
