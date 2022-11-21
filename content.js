@@ -134,6 +134,11 @@
                         if (userSession && this.config.autoSubmit) {
                             userSession.click();
                         }
+                    } else if(this.orgine == 'message_releve_automatique') {
+                        let rlvContinuer = document.getElementById("form_releve_bouton_continuer");
+                        if (rlvContinuer && this.config.autoSubmit) {
+                            rlvContinuer.click();
+                        }
                     } else {
                         // nothing
                     }
